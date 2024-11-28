@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CalculateMaximumTime,
   CalculateExpectedTime,
@@ -54,7 +54,7 @@ export default function Home() {
                 strong password.
               </p>
               <p>
-                Let's see how long it would take a hacker to crack your
+                Let&apos;s see how long it would take a hacker to crack your
                 password.
               </p>
               <div className="mt-2" />
