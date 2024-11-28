@@ -28,10 +28,32 @@ export async function CalculateMaximumTime(password: string, speed: number) { //
     }
 }
 
-export function CalculateExpectedTime(password: string, speed: number) { // Speed in MH/s
+export async function CalculateExpectedTime(password: string, speed: number) { // Speed in MH/s
     const totalHashes = CalculateTotalHashes(password);
+    const timeInSeconds = totalHashes / (speed * 1000000) / 2;
 
-    return(totalHashes / speed * 1000000 / 2);
+    if ((await commonPasswords).split("\n").includes(password)) {
+        return "< 0.01 seconds (common password)";
+    }
+    if (timeInSeconds < 0.01) {
+        return "< 0.01 seconds";
+    } else if (timeInSeconds < 60) {
+        return timeInSeconds.toFixed(2).toString() + " seconds";
+    } else if (timeInSeconds < 3600) {
+        return (timeInSeconds / 60).toFixed(2).toString() + " minutes";
+    } else if (timeInSeconds < 86400) {
+        return (timeInSeconds / 3600).toFixed(2).toString() + " hours";
+    } else if (timeInSeconds < 604800) {
+        return (timeInSeconds / 86400).toFixed(2).toString() + " days";
+    } else if (timeInSeconds < 2419200) {
+        return (timeInSeconds / 604800).toFixed(2).toString() + " weeks";
+    } else if (timeInSeconds < 29030400) {
+        return (timeInSeconds / 2419200).toFixed(2).toString() + " months";
+    } else if (timeInSeconds / 29030400 < 1.7 * 10 ** 106) {
+        return (timeInSeconds / 29030400).toFixed(2).toString() + " years";
+    } else {
+        return "After the heat death of the universe";
+    }
 }
 
 function CalculateTotalHashes(password: string) {
