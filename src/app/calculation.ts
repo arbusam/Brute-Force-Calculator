@@ -68,51 +68,51 @@ export function CalculateTotalHashes(password: string) {
 }
 
 export function CalculateAmountOfPossibleCharacters(password: string) {
-    if (password.length === 0) {
-        return 0;
-    }
-    // 26 letters of each case, 10 numbers and 34 special characters
-    if (
-        ContainsMixedCase(password) &&
-        ContainsSpecialCharacter(password) &&
-        ContainsNumber(password)
-    ) {
-        return 96;
-    } else if (
-        ContainsMixedCase(password) &&
-        ContainsSpecialCharacter(password) &&
-        !ContainsNumber(password)
-    ) {
-        return 86;
-    } else if (
-        ContainsMixedCase(password) &&
-        !ContainsSpecialCharacter(password) &&
-        ContainsNumber(password)
-    ) {
-        return 62;
-    } else if (
-        !ContainsMixedCase(password) &&
-        ContainsSpecialCharacter(password) &&
-        ContainsNumber(password)
-    ) {
-        return 60;
-    } else if (
-        ContainsMixedCase(password) &&
-        !ContainsSpecialCharacter(password) &&
-        !ContainsNumber(password)
-    ) {
-        return 52;
-    } else if (
-        !ContainsMixedCase(password) &&
-        ContainsSpecialCharacter(password) &&
-        !ContainsNumber(password)
-    ) {
-        return 50;
-    } else if (ContainsNumber(password)) {
-        return 36;
-    } else {
-        return 26;
-    }
+  if (password.length === 0) {
+    return 0;
+  }
+  // 26 letters of each case, 10 numbers and 34 special characters
+  if (
+    ContainsMixedCase(password) &&
+    ContainsSpecialCharacter(password) &&
+    ContainsNumber(password)
+  ) {
+    return 96;
+  } else if (
+    ContainsMixedCase(password) &&
+    ContainsSpecialCharacter(password) &&
+    !ContainsNumber(password)
+  ) {
+    return 86;
+  } else if (
+    ContainsMixedCase(password) &&
+    !ContainsSpecialCharacter(password) &&
+    ContainsNumber(password)
+  ) {
+    return 62;
+  } else if (
+    !ContainsMixedCase(password) &&
+    ContainsSpecialCharacter(password) &&
+    ContainsNumber(password)
+  ) {
+    return 60;
+  } else if (
+    ContainsMixedCase(password) &&
+    !ContainsSpecialCharacter(password) &&
+    !ContainsNumber(password)
+  ) {
+    return 52;
+  } else if (
+    !ContainsMixedCase(password) &&
+    ContainsSpecialCharacter(password) &&
+    !ContainsNumber(password)
+  ) {
+    return 50;
+  } else if (ContainsNumber(password)) {
+    return 36;
+  } else {
+    return 26;
+  }
 }
 
 function ContainsMixedCase(password: string) {

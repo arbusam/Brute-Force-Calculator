@@ -1,7 +1,12 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
-import { CalculateMaximumTime, CalculateExpectedTime, CalculateAmountOfPossibleCharacters, CalculateTotalHashes } from "./calculation";
+import {
+  CalculateMaximumTime,
+  CalculateExpectedTime,
+  CalculateAmountOfPossibleCharacters,
+  CalculateTotalHashes,
+} from "./calculation";
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
@@ -9,7 +14,8 @@ export default function Home() {
   const [speed, setSpeed] = useState(5000);
   const [maximumTime, setMaximumTime] = useState("");
   const [expectedTime, setExpectedTime] = useState("");
-  const [amountOfPossibleCharacters, setAmountOfPossibleCharacters] = useState(0);
+  const [amountOfPossibleCharacters, setAmountOfPossibleCharacters] =
+    useState(0);
   const [totalHashes, setTotalHashes] = useState(0);
   const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false);
   const [mathsOpen, setMathsOpen] = useState(false);
@@ -21,7 +27,9 @@ export default function Home() {
     CalculateExpectedTime(password, speed).then((time) => {
       setExpectedTime(time);
     });
-    setAmountOfPossibleCharacters(CalculateAmountOfPossibleCharacters(password));
+    setAmountOfPossibleCharacters(
+      CalculateAmountOfPossibleCharacters(password),
+    );
     setTotalHashes(CalculateTotalHashes(password));
   }, [password, speed]);
 
@@ -216,37 +224,75 @@ export default function Home() {
               </div>
               {mathsOpen && (
                 <div className="mt-2">
-                  <h2 className="font-sans text-xl font-bold">Amount of possible characters</h2>
+                  <h2 className="font-sans text-xl font-bold">
+                    Amount of possible characters
+                  </h2>
                   <div className="mt-1" />
-                  <h3 className="text-lg font-regular">Letters in one case only: 26</h3>
-                  <h3 className="text-lg font-regular">Letters in one case and numbers only: 36</h3>
-                  <h3 className="text-lg font-regular">Letters in one case and special characters only: 60</h3>
-                  <h3 className="text-lg font-regular">Letters in mixed case only: 52</h3>
-                  <h3 className="text-lg font-regular">Letters in one case, numbers, and special characters only: 60</h3>
-                  <h3 className="text-lg font-regular">Letters in mixed case and numbers only: 62</h3>
-                  <h3 className="text-lg font-regular">Letters in mixed case and special characters only: 86</h3>
-                  <h3 className="text-lg font-regular">Letters in mixed case, numbers, and special characters: 96</h3>
+                  <h3 className="text-lg font-regular">
+                    Letters in one case only: 26
+                  </h3>
+                  <h3 className="text-lg font-regular">
+                    Letters in one case and numbers only: 36
+                  </h3>
+                  <h3 className="text-lg font-regular">
+                    Letters in one case and special characters only: 60
+                  </h3>
+                  <h3 className="text-lg font-regular">
+                    Letters in mixed case only: 52
+                  </h3>
+                  <h3 className="text-lg font-regular">
+                    Letters in one case, numbers, and special characters only:
+                    60
+                  </h3>
+                  <h3 className="text-lg font-regular">
+                    Letters in mixed case and numbers only: 62
+                  </h3>
+                  <h3 className="text-lg font-regular">
+                    Letters in mixed case and special characters only: 86
+                  </h3>
+                  <h3 className="text-lg font-regular">
+                    Letters in mixed case, numbers, and special characters: 96
+                  </h3>
                   <div className="mt-2" />
 
-                  <h2 className="font-sans text-xl font-bold">Amount of possible different passwords</h2>
+                  <h2 className="font-sans text-xl font-bold">
+                    Amount of possible different passwords
+                  </h2>
                   <div className="mt-1" />
-                  <h3 className="text-lg font-regular">Amount of possible characters ^ Password Length</h3>
+                  <h3 className="text-lg font-regular">
+                    Amount of possible characters ^ Password Length
+                  </h3>
                   <div className="mt-2" />
 
-                  <h2 className="font-sans text-xl font-bold">Maximum amount of time to crack</h2>
+                  <h2 className="font-sans text-xl font-bold">
+                    Maximum amount of time to crack
+                  </h2>
                   <div className="mt-1" />
-                  <h3 className="text-lg font-regular">Amount of possible different passwords / Megahashes per second</h3>
+                  <h3 className="text-lg font-regular">
+                    Amount of possible different passwords / Megahashes per
+                    second
+                  </h3>
                   <div className="mt-2" />
 
-                  <h2 className="font-sans text-xl font-bold">Expected amount of time to crack</h2>
+                  <h2 className="font-sans text-xl font-bold">
+                    Expected amount of time to crack
+                  </h2>
                   <div className="mt-1" />
-                  <h3 className="text-lg font-regular">Maximum amount of time to crack / 2</h3>
+                  <h3 className="text-lg font-regular">
+                    Maximum amount of time to crack / 2
+                  </h3>
                   <div className="mt-2" />
 
-                  <h2 className="font-sans text-xl font-bold">For your password</h2>
+                  <h2 className="font-sans text-xl font-bold">
+                    For your password
+                  </h2>
                   <div className="mt-1" />
-                  <h3 className="text-lg font-regular">Amount of possible characters: {amountOfPossibleCharacters}</h3>
-                  <h3 className="text-lg font-regular">Total amount of different passwords: {totalHashes}</h3>
+                  <h3 className="text-lg font-regular">
+                    Amount of possible characters: {amountOfPossibleCharacters}
+                  </h3>
+                  <h3 className="text-lg font-regular">
+                    Total amount of different passwords: {totalHashes}
+                  </h3>
                 </div>
               )}
             </div>
