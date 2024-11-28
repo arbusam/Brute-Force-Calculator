@@ -1,23 +1,28 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
-import { CalculateMaximumTime, CalculateExpectedTime } from "./calculation";
+import { CalculateMaximumTime, CalculateExpectedTime, CalculateAmountOfPossibleCharacters, CalculateTotalHashes } from "./calculation";
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
   const [password, setPassword] = useState("");
-  const [speed, setSpeed] = useState(4000);
+  const [speed, setSpeed] = useState(5000);
   const [maximumTime, setMaximumTime] = useState("");
   const [expectedTime, setExpectedTime] = useState("");
+  const [amountOfPossibleCharacters, setAmountOfPossibleCharacters] = useState(0);
+  const [totalHashes, setTotalHashes] = useState(0);
   const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false);
+  const [mathsOpen, setMathsOpen] = useState(false);
 
   useEffect(() => {
     CalculateMaximumTime(password, speed).then((time) => {
-      setMaximumTime(time)
+      setMaximumTime(time);
     });
     CalculateExpectedTime(password, speed).then((time) => {
-      setExpectedTime(time)
+      setExpectedTime(time);
     });
+    setAmountOfPossibleCharacters(CalculateAmountOfPossibleCharacters(password));
+    setTotalHashes(CalculateTotalHashes(password));
   }, [password, speed]);
 
   return (
@@ -43,6 +48,12 @@ export default function Home() {
               <p>
                 Let's see how long it would take a hacker to crack your
                 password.
+              </p>
+              <div className="mt-2" />
+              <p>
+                TIP: Increase the time a hacker would take by using a longer
+                password with a mix of upper and lowercase letters, numbers, and
+                symbols.
               </p>
               <div className="mt-4" />
 
@@ -86,7 +97,7 @@ export default function Home() {
                 </button>
               </div>
               <div className="mt-2" />
-                <div className="flex items-center">
+              <div className="flex items-center">
                 <button
                   type="button"
                   className="flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
@@ -125,36 +136,119 @@ export default function Home() {
                     </svg>
                   )}
                 </button>
+              </div>
+              {advancedSettingsOpen && (
+                <div className="mt-2">
+                  <label className="text-sm text-gray-600 dark:text-gray-400">
+                    Megahashes per second (MH/s):
+                  </label>
+                  <input
+                    type="number"
+                    className="ml-2 w-24 rounded-md border border-gray-300 p-1 text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                    value={speed}
+                    onChange={(e) => {
+                      setSpeed(parseInt(e.target.value));
+                    }}
+                  />
                 </div>
-                {advancedSettingsOpen && (
-                  <div className="mt-2">
-                    <label className="text-sm text-gray-600 dark:text-gray-400">Megahashes per second (MH/s):</label>
-                    <input
-                      type="number"
-                      className="ml-2 w-24 rounded-md border border-gray-300 p-1 text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                      value={speed}
-                      onChange={(e) => {
-                        setSpeed(parseInt(e.target.value));
-                      }}
-                    />
-                  </div>
-                  )}
+              )}
               <div className="mt-4" />
 
               <div className="flex items-center justify-between">
-                  <label className="font-sans text-lg font-semibold">Maximum Time: </label>
-                  <span className="font-sans text-lg font-semibold">
-                    {maximumTime}
-                  </span>
+                <label className="font-sans text-lg font-semibold">
+                  Maximum Time:{" "}
+                </label>
+                <span className="font-sans text-lg font-semibold">
+                  {maximumTime}
+                </span>
               </div>
               <div className="mt-2" />
-              
+
               <div className="flex items-center justify-between">
-                <label className="font-sans text-lg font-semibold">Expected Time: </label>
+                <label className="font-sans text-lg font-semibold">
+                  Expected Time:{" "}
+                </label>
                 <span className="font-sans text-lg font-semibold">
                   {expectedTime}
                 </span>
               </div>
+
+              <div className="mt-4" />
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  className="flex items-center text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  onClick={() => {
+                    setMathsOpen(!mathsOpen);
+                  }}
+                >
+                  Explain the maths
+                  {mathsOpen ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="18 15 12 9 6 15" />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              {mathsOpen && (
+                <div className="mt-2">
+                  <h2 className="font-sans text-xl font-bold">Amount of possible characters</h2>
+                  <div className="mt-1" />
+                  <h3 className="text-lg font-regular">Letters in one case only: 26</h3>
+                  <h3 className="text-lg font-regular">Letters in one case and numbers only: 36</h3>
+                  <h3 className="text-lg font-regular">Letters in one case and special characters only: 60</h3>
+                  <h3 className="text-lg font-regular">Letters in mixed case only: 52</h3>
+                  <h3 className="text-lg font-regular">Letters in one case, numbers, and special characters only: 60</h3>
+                  <h3 className="text-lg font-regular">Letters in mixed case and numbers only: 62</h3>
+                  <h3 className="text-lg font-regular">Letters in mixed case and special characters only: 86</h3>
+                  <h3 className="text-lg font-regular">Letters in mixed case, numbers, and special characters: 96</h3>
+                  <div className="mt-2" />
+
+                  <h2 className="font-sans text-xl font-bold">Amount of possible different passwords</h2>
+                  <div className="mt-1" />
+                  <h3 className="text-lg font-regular">Amount of possible characters ^ Password Length</h3>
+                  <div className="mt-2" />
+
+                  <h2 className="font-sans text-xl font-bold">Maximum amount of time to crack</h2>
+                  <div className="mt-1" />
+                  <h3 className="text-lg font-regular">Amount of possible different passwords / Megahashes per second</h3>
+                  <div className="mt-2" />
+
+                  <h2 className="font-sans text-xl font-bold">Expected amount of time to crack</h2>
+                  <div className="mt-1" />
+                  <h3 className="text-lg font-regular">Maximum amount of time to crack / 2</h3>
+                  <div className="mt-2" />
+
+                  <h2 className="font-sans text-xl font-bold">For your password</h2>
+                  <div className="mt-1" />
+                  <h3 className="text-lg font-regular">Amount of possible characters: {amountOfPossibleCharacters}</h3>
+                  <h3 className="text-lg font-regular">Total amount of different passwords: {totalHashes}</h3>
+                </div>
+              )}
             </div>
           </div>
         </main>
