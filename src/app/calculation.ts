@@ -1,10 +1,10 @@
-const COMMON_PASSWORDS_FILE_PATH = "../../10k-most-common.txt";
+const COMMON_PASSWORDS_FILE_PATH = "100k-most-used-passwords-NCSC.txt";
+const commonPasswords = fetch(COMMON_PASSWORDS_FILE_PATH).then((response) => response.text());
 
 export async function CalculateMaximumTime(password: string, speed: number) { // Speed in MH/s
     const totalHashes = CalculateTotalHashes(password);
     const timeInSeconds = totalHashes / (speed * 1000000);
-    const commonPasswords = await fetch(COMMON_PASSWORDS_FILE_PATH).then((response) => response.text());
-    if (commonPasswords.split("\n").includes(password)) {
+    if ((await commonPasswords).split("\n").includes(password)) {
         return "< 0.01 seconds (common password)";
     }
     if (timeInSeconds < 0.01) {
